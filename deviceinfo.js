@@ -68,4 +68,8 @@ module.exports = {
   isPinOrFingerprintSet: function () {
     return RNDeviceInfo.isPinOrFingerprintSet;
   },
+  HOUR_FORMAT: {
+    12: RNDeviceInfo['12hourFormat'],
+    24: RNDeviceInfo['24hourFormat'],
+  },
 };

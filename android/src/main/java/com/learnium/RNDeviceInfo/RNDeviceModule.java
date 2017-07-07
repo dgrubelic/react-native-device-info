@@ -73,6 +73,14 @@ public class RNDeviceModule extends ReactContextBaseJavaModule {
     return layout == Configuration.SCREENLAYOUT_SIZE_LARGE || layout == Configuration.SCREENLAYOUT_SIZE_XLARGE;
   }
 
+  private String getHourFormat() {
+    if (android.text.format.DateFormat.is24HourFormat(getReactApplicationContext())){
+      return "24hour";
+    } else {
+      return "12hour";
+    }
+  }
+
   @ReactMethod
   public void isPinOrFingerprintSet(Callback callback) {
     KeyguardManager keyguardManager = (KeyguardManager) this.reactContext.getSystemService(Context.KEYGUARD_SERVICE); //api 16+
@@ -125,6 +133,9 @@ public class RNDeviceModule extends ReactContextBaseJavaModule {
     constants.put("timezone", TimeZone.getDefault().getID());
     constants.put("isEmulator", this.isEmulator());
     constants.put("isTablet", this.isTablet());
+    constants.put("hourFormat", this.getHourFormat());
+    constants.put("12hourFormat", "12hour");
+    constants.put("24hourFormat", "24hour");
     return constants;
   }
 }

@@ -152,17 +152,18 @@ RCT_EXPORT_MODULE()
     NSTimeZone *currentTimeZone = [NSTimeZone localTimeZone];
     return currentTimeZone.name;
 }
-- (bool) hourFormat
+
+- (NSString*) hourFormat
 {
-    NSString *formatStringForHours = [NSDateFormatter dateFormatFromTemplate:@"j" options:0 locale:[NSLocale currentLocale]];
-    NSRange containsA = [formatStringForHours rangeOfString:@"a"];
-    BOOL hasAMPM = containsA.location != NSNotFound;
-    if (hasAMPM) {
-        return @"12hourFormat";
-    } else {
-        return @"24hourFormat";
-    }
-} 
+  NSString *formatStringForHours = [NSDateFormatter dateFormatFromTemplate:@"j" options:0 locale:[NSLocale currentLocale]];
+  NSRange containsA = [formatStringForHours rangeOfString:@"a"];
+  BOOL hasAMPM = containsA.location != NSNotFound;
+  if (hasAMPM) {
+      return @"12hour";
+  } else {
+      return @"24hour";
+  }
+}
 
 - (bool) isEmulator
 {
@@ -181,26 +182,27 @@ RCT_EXPORT_MODULE()
     NSString *uniqueId = [DeviceUID uid];
 
     return @{
-             @"systemName": currentDevice.systemName,
-             @"systemVersion": currentDevice.systemVersion,
-             @"model": self.deviceName,
-             @"brand": @"Apple",
-             @"deviceId": self.deviceId,
-             @"deviceName": currentDevice.name,
-             @"deviceLocale": self.deviceLocale,
-             @"deviceCountry": self.deviceCountry ?: [NSNull null],
-             @"uniqueId": uniqueId,
-             @"bundleId": [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"],
-             @"appVersion": [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] ?: [NSNull null],
-             @"buildNumber": [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"],
-             @"systemManufacturer": @"Apple",
-             @"userAgent": self.userAgent,
-             @"timezone": self.timezone,
-             @"isEmulator": @(self.isEmulator),
-             @"isTablet": @(self.isTablet),
-             @"12hourFormat": @"12hour",
-             @"24hourFormat": @"24hour",
-             };
+      @"systemName": currentDevice.systemName,
+      @"systemVersion": currentDevice.systemVersion,
+      @"model": self.deviceName,
+      @"brand": @"Apple",
+      @"deviceId": self.deviceId,
+      @"deviceName": currentDevice.name,
+      @"deviceLocale": self.deviceLocale,
+      @"deviceCountry": self.deviceCountry ?: [NSNull null],
+      @"uniqueId": uniqueId,
+      @"bundleId": [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"],
+      @"appVersion": [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] ?: [NSNull null],
+      @"buildNumber": [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"],
+      @"systemManufacturer": @"Apple",
+      @"userAgent": self.userAgent,
+      @"timezone": self.timezone,
+      @"isEmulator": @(self.isEmulator),
+      @"isTablet": @(self.isTablet),
+      @"hourFormat": self.hourFormat  ?: [NSNull null],
+      @"12hourFormat": @"12hour",
+      @"24hourFormat": @"24hour",
+    };
 }
 
 RCT_EXPORT_METHOD(isPinOrFingerprintSet:(RCTResponseSenderBlock)callback)
