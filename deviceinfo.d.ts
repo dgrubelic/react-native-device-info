@@ -18,6 +18,7 @@ declare class DeviceInfo {
   public static getDeviceLocale(): string;
   public static getDeviceCountry(): string;
   public static getTimezone(): string;
+  public static getHourFormat(): string;
   public static getInstanceID(): string;
   public static isEmulator(): boolean;
   public static isTablet(): boolean;

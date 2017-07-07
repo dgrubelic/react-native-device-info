@@ -143,24 +143,35 @@ RCT_EXPORT_MODULE()
 
 - (NSString*) deviceCountry
 {
-  NSString *country = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
-  return country;
+    NSString *country = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
+    return country;
 }
 
 - (NSString*) timezone
 {
-  NSTimeZone *currentTimeZone = [NSTimeZone localTimeZone];
-  return currentTimeZone.name;
+    NSTimeZone *currentTimeZone = [NSTimeZone localTimeZone];
+    return currentTimeZone.name;
 }
+- (bool) hourFormat
+{
+    NSString *formatStringForHours = [NSDateFormatter dateFormatFromTemplate:@"j" options:0 locale:[NSLocale currentLocale]];
+    NSRange containsA = [formatStringForHours rangeOfString:@"a"];
+    BOOL hasAMPM = containsA.location != NSNotFound;
+    if (hasAMPM) {
+        return @"12hourFormat";
+    } else {
+        return @"24hourFormat";
+    }
+} 
 
 - (bool) isEmulator
 {
-  return [self.deviceName isEqual: @"Simulator"];
+    return [self.deviceName isEqual: @"Simulator"];
 }
 
 - (bool) isTablet
 {
-  return [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
+    return [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
 }
 
 - (NSDictionary *)constantsToExport
@@ -187,6 +198,8 @@ RCT_EXPORT_MODULE()
              @"timezone": self.timezone,
              @"isEmulator": @(self.isEmulator),
              @"isTablet": @(self.isTablet),
+             @"12hourFormat": @"12hour",
+             @"24hourFormat": @"24hour",
              };
 }
 
