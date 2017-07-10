@@ -155,14 +155,14 @@ RCT_EXPORT_MODULE()
 
 - (NSString*) hourFormat
 {
-  NSString *formatStringForHours = [NSDateFormatter dateFormatFromTemplate:@"j" options:0 locale:[NSLocale currentLocale]];
-  NSRange containsA = [formatStringForHours rangeOfString:@"a"];
-  BOOL hasAMPM = containsA.location != NSNotFound;
-  if (hasAMPM) {
-      return @"12hour";
-  } else {
-      return @"24hour";
-  }
+    NSString *formatStringForHours = [NSDateFormatter dateFormatFromTemplate:@"j" options:0 locale:[NSLocale currentLocale]];
+    NSRange containsA = [formatStringForHours rangeOfString:@"a"];
+    BOOL hasAMPM = containsA.location != NSNotFound;
+    if (hasAMPM) {
+        return @"12hour";
+    } else {
+        return @"24hour";
+    }
 }
 
 - (bool) isEmulator
